@@ -9,4 +9,38 @@ dependencies = []
 [dependency-groups]
 dev = [
     "pytest>=9.0.1",
+    "pytest-coverage>=0.0",
+    "ruff>=0.14.9",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]
+
+[tool.ruff]
+exclude = [
+    "gnmi/proto",
+]
+
+[tool.tox]
+requires = ["tox>=4.26"]
+env_list = ["3.9", "ruff"]
+
+[tool.tox.env_run_base]
+deps = ["pytest"]
+description = "Run test under {base_python}"
+commands = [["pytest"]]
+
+[tool.tox.env.ruff]
+description = "lint source code"
+deps = ["ruff"]
+commands = [
+    ["ruff", "check", "."],
+    ["ruff", "format", "--check", "."]
+]
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
+check_untyped_defs = true

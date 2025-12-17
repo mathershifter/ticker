@@ -41,9 +41,9 @@ def test_timer_expire():
     # (.03, ticker.MINUTE, 1e-4),
     2.0 * ticker.SECOND,
     100.0 * ticker.MILLISECOND,
-    # (10, ticker.MILLISECOND),
-    # (1, ticker.MILLISECOND),
-    # (100, ticker.MICROSECOND)
+    10 * ticker.MILLISECOND,
+    1 * ticker.MILLISECOND,
+    100 * ticker.MICROSECOND
 ])
 def test_timer(timeout):
     timeout = timeout
@@ -52,8 +52,9 @@ def test_timer(timeout):
     with ticker.Timer(timeout) as tmr:
         end = tmr.wait()
     
-    assert (end - start) / 1_000_000_000 == pytest.approx(timeout, rel=1e-1), \
-        f"timer did not end on time [{tmr.duration} ~= {timeout}"
+    dur = (end - start) / 1_000_000_000
+    assert dur == pytest.approx(timeout, abs=1e-1), \
+        f"timer did not end on time [{dur} ~= {timeout}"
 
 def test_many():
     # with pytest.raises(ticker.ManagerMaxThreadsExceeded):
