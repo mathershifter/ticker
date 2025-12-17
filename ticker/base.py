@@ -90,18 +90,3 @@ class Base(ABC):
 
     @abstractmethod
     def run(self) -> t.Iterator[int]: ...
-
-    # @abstractmethod
-    # def wait(self, ts: int) -> int: ...
-
-    # def wait(self) -> int:
-    #     try:
-    #         return self._queue.get()
-
-    #     except queue.ShutDown:
-    #         if self.expired:
-    #             raise TimerExpired(
-    #                 "timer expired, but queue was shutdown "
-    #                 "and drained before get was called..."
-    #             )
-    #         raise TimerStopped("timer was stopped before deadline")
